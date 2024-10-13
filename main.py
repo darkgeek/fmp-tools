@@ -5,7 +5,6 @@ from model.Lineup import Lineup, LineupPlayer
 from model.AttackingStyle import AttackingStyle
 from model.KickStyle import KickStyle
 from model.ClashReport import ClashReport
-from utils.PlayerUtils import get_by_no, get_by_pos
 
 my_players = load_players("my_players.json")
 print(my_players)

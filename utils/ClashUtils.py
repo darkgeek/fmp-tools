@@ -1,5 +1,7 @@
+from model.Lineup import Lineup, LineupPlayer
 from model.Player import Player
 from model.ClashReport import ClashReport
+from utils.PlayerUtils import get_by_no, get_by_pos
 
 CLASH_ZONE_AND_STYLE_AND_SKILL_AND_IS_ATTACKING_TO_WEIGHT_DICT = {
     "dc-fil-tec-attack": 0.9,
@@ -51,7 +53,7 @@ OUTFIELDER_SKILLS = ["pac", "mar", "tak", "tec",
 ZONES = ["dc", "dl", "dr", "mc", "ml", "mr", "fc", "fl", "fr"]
 
 
-def buildClashReport(attackers: [Player], defenders: [Player], style: AttackingStyle) -> [ClashReport]:
+def buildClashReport(attackers: [LineupPlayer], defenders: [LineupPlayer], style: AttackingStyle) -> [ClashReport]:
     return []
 
 
