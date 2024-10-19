@@ -18,3 +18,8 @@ class KickingBattleReport:
     defender_energy: float
     defender_overall_grade: float
     defender_tactic_grade: float
+
+    score_method_grade: float
+    gk_energy: float
+    gk_overall_grade: float
+    gk_tactic_grade: float

@@ -7,3 +7,5 @@ class KickStyle(Enum):
     HEA = "Heading"
     OVE = "Overkick"
     LOB = "Lob kick"
+    PEN = "Penalty"
+    DIR = "Direct freekick"
