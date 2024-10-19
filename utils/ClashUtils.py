@@ -1,7 +1,8 @@
 from model.Lineup import Lineup, LineupPlayer
 from model.Player import Player
 from model.ClashReport import ClashReport
-from utils.PlayerUtils import get_by_no, get_by_pos
+from model.AttackingStyle import AttackingStyle
+from utils.PlayerUtils import get_by_no, get_by_pos, get_by_pos_list
 
 CLASH_ZONE_AND_STYLE_AND_SKILL_AND_IS_ATTACKING_TO_WEIGHT_DICT = {
     "dc-fil-tec-attack": 0.9,
@@ -46,19 +47,68 @@ CLASH_ZONE_AND_STYLE_AND_SKILL_AND_IS_ATTACKING_TO_WEIGHT_DICT = {
     "fl-fil-pas-attack": 0.5,
     "fl-fil-pos-attack": 0.6,
     "fl-fil-hea-attack": 0.25,
+
+    "fr-fil-pac-attack": 0.25,
+    "fr-fil-tec-attack": 0.5,
+    "fr-fil-pas-attack": 0.5,
+    "fr-fil-pos-attack": 0.6,
+    "fr-fil-hea-attack": 0.25,
 }
 
 OUTFIELDER_SKILLS = ["pac", "mar", "tak", "tec",
                      "pas", "pos", "cro", "hea", "fin", "lon"]
 ZONES = ["dc", "dl", "dr", "mc", "ml", "mr", "fc", "fl", "fr"]
+ZONE_TO_ATTACKER_POS_DICT = {
+    "dc": ["dc", "dmc", "mc"],
+    "dl": ["dl", "dml", "ml"],
+    "dr": ["dr", "dmr", "mr"],
+    "mc": ["mc", "dmc", "amc"],
+    "ml": ["ml", "dml", "aml"],
+    "mr": ["mr", "dmr", "amr"],
+    "fc": ["fc", "amc", "mc"],
+    "fl": ["fl", "aml", "ml"],
+    "fr": ["fr", "amr", "mr"],
+}
+ATTACKER_ZONE_TO_DEFENDER_ZONE_DICT = {
+    "dc": "fc",
+    "dl": "fr",
+    "dr": "fl",
+    "mc": "mc",
+    "ml": "mr",
+    "mr": "ml",
+    "fc": "dc",
+    "fl": "dr",
+    "fr": "dl",
+}
 
 
-def buildClashReport(attackers: [LineupPlayer], defenders: [LineupPlayer], style: AttackingStyle) -> [ClashReport]:
-    return []
+def buildClashReport(attackers: [LineupPlayer], defenders: [LineupPlayer], style: AttackingStyle, allAttackers: [Player], allDefenders: [Player]) -> [ClashReport]:
+    reports = []
+
+    for zone in ZONES:
+        attacker_pos_list = ZONE_TO_ATTACKER_POS_DICT[zone]
+        aPlayers = get_by_pos_list(attacker_pos_list, attackers)
+
+        defender_pos_list = ZONE_TO_ATTACKER_POS_DICT[ATTACKER_ZONE_TO_DEFENDER_ZONE_DICT[zone]]
+        dPlayers = get_by_pos_list(defender_pos_list, defenders)
+
+        for ap in aPlayers:
+            fullAp = get_by_no(ap.no, allAttackers)
+            for dp in dPlayers:
+                fullDp = get_by_no(dp.no, allDefenders)
+
+                report = buildOneOnOneClashReport(
+                    fullAp, ap.position, fullDp, dp.position, style, zone)
+                reports.append(report)
+
+    return reports
 
 
-def buildOneOnOneClashReport(attacker: Player, defender: Player, style: AttackingStyle, zone: str) -> ClashReport:
-    return
+def buildOneOnOneClashReport(attacker: Player, attackerPosition: str, defender: Player, defenderPosition: str, style: AttackingStyle, zone: str) -> ClashReport:
+    attackerTacticGrade = getPlayerTacticsGrade(attacker, style, zone, True)
+    defenderTacticGrade = getPlayerTacticsGrade(defender, style, zone, False)
+
+    return ClashReport(zone=zone, attacker=attacker.name, attacker_pos=attackerPosition, attacker_energy=attacker.form,  attacker_overall_grade=attacker.rating, attacker_tactic_grade=attackerTacticGrade, defender=defender.name, defender_pos=defenderPosition, defender_energy=defender.form, defender_overall_grade=defender.rating, defender_tactic_grade=defenderTacticGrade)
 
 
 def getPlayerTacticsGrade(player: Player, style: AttackingStyle, zone: str, is_attacking: bool) -> float:
