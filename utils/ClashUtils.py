@@ -53,6 +53,49 @@ CLASH_ZONE_AND_STYLE_AND_SKILL_AND_IS_ATTACKING_TO_WEIGHT_DICT = {
     "fr-fil-pas-attack": 0.5,
     "fr-fil-pos-attack": 0.6,
     "fr-fil-hea-attack": 0.25,
+
+    "dc-fil-mar-defend": 0.55,
+    "dc-fil-tak-defend": 0.55,
+    "dc-fil-pos-defend": 0.55,
+    "dc-fil-hea-defend": 0.55,
+
+    "dl-fil-mar-defend": 0.55,
+    "dl-fil-tak-defend": 0.55,
+    "dl-fil-pos-defend": 0.55,
+    "dl-fil-hea-defend": 0.55,
+
+    "dr-fil-mar-defend": 0.55,
+    "dr-fil-tak-defend": 0.55,
+    "dr-fil-pos-defend": 0.55,
+    "dr-fil-hea-defend": 0.55,
+
+    "mc-fil-mar-defend": 0.9,
+    "mc-fil-tak-defend": 0.6,
+    "mc-fil-pos-defend": 0.9,
+
+    "ml-fil-pac-defend": 0.25,
+    "ml-fil-mar-defend": 0.9,
+    "ml-fil-tak-defend": 0.55,
+    "ml-fil-pos-defend": 0.55,
+
+    "mr-fil-pac-defend": 0.25,
+    "mr-fil-mar-defend": 0.9,
+    "mr-fil-tak-defend": 0.55,
+    "mr-fil-pos-defend": 0.55,
+
+    "fc-fil-mar-defend": 0.9,
+    "fc-fil-tak-defend": 0.8,
+    "fc-fil-pos-defend": 0.55,
+
+    "fl-fil-pac-defend": 0.3,
+    "fl-fil-mar-defend": 0.9,
+    "fl-fil-tak-defend": 0.55,
+    "fl-fil-pos-defend": 0.25,
+
+    "fr-fil-pac-defend": 0.3,
+    "fr-fil-mar-defend": 0.9,
+    "fr-fil-tak-defend": 0.55,
+    "fr-fil-pos-defend": 0.25,
 }
 
 OUTFIELDER_SKILLS = ["pac", "mar", "tak", "tec",
