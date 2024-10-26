@@ -8,11 +8,39 @@ from utils.PlayerUtils import get_by_no, get_by_pos, get_by_pos_list
 
 ACTION_TO_FINALIZATION_DICT = {
     AttackingStyle.FIL: {
-        KickStyle.SHO: 0.4,
+        KickStyle.SHO: 0.45,
         KickStyle.LON: 0.2,
-        KickStyle.HEA: 0.35,
+        KickStyle.HEA: 0.4,
         KickStyle.OVE: 0.025,
         KickStyle.LOB: 0.025,
+    },
+    AttackingStyle.SHO: {
+        KickStyle.SHO: 0.65,
+        KickStyle.LON: 0.10,
+        KickStyle.HEA: 0.25,
+        KickStyle.OVE: 0.01,
+        KickStyle.LOB: 0.15,
+    },
+    AttackingStyle.LON: {
+        KickStyle.SHO: 0.4,
+        KickStyle.LON: 0.3,
+        KickStyle.HEA: 0.4,
+        KickStyle.OVE: 0.025,
+        KickStyle.LOB: 0.025,
+    },
+    AttackingStyle.COU: {
+        KickStyle.SHO: 0.2,
+        KickStyle.LON: 0.4,
+        KickStyle.HEA: 0.4,
+        KickStyle.OVE: 0.01,
+        KickStyle.LOB: 0.15,
+    },
+    AttackingStyle.WIN: {
+        KickStyle.SHO: 0.4,
+        KickStyle.LON: 0.2,
+        KickStyle.HEA: 0.5,
+        KickStyle.OVE: 0.15,
+        KickStyle.LOB: 0.01,
     },
 }
 
@@ -29,7 +57,56 @@ KICK_TO_SKILL_DICT = {
             "tec": 0.15,
             "pos": 0.25,
         }
-    }
+    },
+    KickStyle.LON: {
+        "attack": {
+            "tak": 0.35,
+            "tec": 0.35,
+            "pos": 0.35,
+        },
+        "defend": {
+            "mar": 0.35,
+            "tak": 0.35,
+            "tec": 0.15,
+            "pos": 0.25,
+        }
+    },
+    KickStyle.HEA: {
+        "attack": {
+            "tec": 0.2,
+            "pos": 0.35,
+            "hea": 0.55,
+        },
+        "defend": {
+            "mar": 0.2,
+            "tak": 0.1,
+            "pos": 0.35,
+            "hea": 0.55,
+        }
+    },
+    KickStyle.OVE: {
+        "attack": {
+            "tec": 0.5,
+            "pos": 0.4,
+            "hea": 0.1
+        },
+        "defend": {
+            "mar": 0.3,
+            "tak": 0.3,
+            "pos": 0.3,
+        }
+    },
+    KickStyle.LOB: {
+        "attack": {
+            "tec": 0.6,
+            "pos": 0.4,
+        },
+        "defend": {
+            "mar": 0.3,
+            "tak": 0.3,
+            "pos": 0.3,
+        }
+    },
 }
 
 SCOREING_TYPE_TO_SKILLS_DICT = {
@@ -45,7 +122,67 @@ SCOREING_TYPE_TO_SKILLS_DICT = {
             "ref": 0.35,
             "pos": 0.2,
         }
-    }
+    },
+    KickStyle.LON: {
+        "attack": {
+            "tec": 0.2,
+            "pos": 0.2,
+            "fin": 0.3,
+            "lon": 0.35,
+        },
+        "defend": {
+            "han": 0.3,
+            "ref": 0.2,
+            "aer": 0.2,
+            "pos": 0.3,
+            "jum": 0.2,
+        }
+    },
+    KickStyle.HEA: {
+        "attack": {
+            "tec": 0.1,
+            "pos": 0.35,
+            "hea": 0.35,
+            "pos": 0.2,
+        },
+        "defend": {
+            "han": 0.3,
+            "ref": 0.15,
+            "aer": 0.2,
+            "pos": 0.15,
+            "jum": 0.15,
+            "ele": 0.15,
+        }
+    },
+    KickStyle.OVE: {
+        "attack": {
+            "tec": 0.55,
+            "pos": 0.3,
+            "fin": 0.3,
+        },
+        "defend": {
+            "han": 0.3,
+            "ref": 0.2,
+            "aer": 0.2,
+            "pos": 0.3,
+            "jum": 0.2,
+        }
+    },
+    KickStyle.LOB: {
+        "attack": {
+            "tec": 0.5,
+            "pos": 0.1,
+            "fin": 0.35,
+        },
+        "defend": {
+            "han": 0.2,
+            "ref": 0.25,
+            "aer": 0.2,
+            "pos": 0.15,
+            "jum": 0.15,
+            "ele": 0.25,
+        }
+    },
 }
 
 KICK_PLAYER_POSITIONS = ["fc", "amc", "aml", "amr"]
