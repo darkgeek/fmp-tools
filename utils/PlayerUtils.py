@@ -10,23 +10,26 @@ def get_by_no(no: int, players: [Player]) -> Player:
     return None
 
 
-def get_by_pos(pos: str, players: [LineupPlayer]) -> LineupPlayer:
+def get_by_pos(pos: str, players: [LineupPlayer]) -> [LineupPlayer]:
+    candidates = []
+
     for p in players:
         if p.position == pos:
-            return p
+            candidates.append(p)
 
-    return None
+    return candidates
 
 
 def get_by_pos_list(posList: [str], players: [LineupPlayer]) -> [LineupPlayer]:
     candidates = []
 
     for pos in posList:
-        player = get_by_pos(pos, players)
+        pos_players = get_by_pos(pos, players)
 
-        if player is None:
-            continue
+        for pp in pos_players:
+            if pp in candidates:
+                continue
 
-        candidates.append(player)
+            candidates.append(pp)
 
     return candidates

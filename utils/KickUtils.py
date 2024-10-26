@@ -194,7 +194,7 @@ def buildBattleReport(attackers: [LineupPlayer], defenders: [LineupPlayer], styl
 
     aPlayers = get_by_pos_list(KICK_PLAYER_POSITIONS, attackers)
     dPlayers = get_by_pos_list(DEFEND_PLAYER_POSITIONS, defenders)
-    gkPlayer = get_by_pos("gk", defenders)
+    gkPlayer = get_by_pos("gk", defenders)[0]
     fullGkPlayer = get_by_no(gkPlayer.no, allDefenders)
 
     for ap in aPlayers:
