@@ -462,15 +462,15 @@ OUTFIELDER_SKILLS = ["pac", "mar", "tak", "tec",
                      "pas", "pos", "cro", "hea", "fin", "lon"]
 ZONES = ["dc", "dl", "dr", "mc", "ml", "mr", "fc", "fl", "fr"]
 ZONE_TO_ATTACKER_POS_DICT = {
-    "dc": ["dc", "dmc", "mc"],
-    "dl": ["dl", "dml", "ml"],
-    "dr": ["dr", "dmr", "mr"],
+    "dc": ["dc", "dmc"],
+    "dl": ["dl", "dml"],
+    "dr": ["dr", "dmr"],
     "mc": ["mc", "dmc", "amc"],
     "ml": ["ml", "dml", "aml"],
     "mr": ["mr", "dmr", "amr"],
-    "fc": ["fc", "amc", "mc"],
-    "fl": ["fl", "aml", "ml"],
-    "fr": ["fr", "amr", "mr"],
+    "fc": ["fc", "amc"],
+    "fl": ["fl", "aml"],
+    "fr": ["fr", "amr"],
 }
 ATTACKER_ZONE_TO_DEFENDER_ZONE_DICT = {
     "dc": "fc",
