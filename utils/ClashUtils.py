@@ -469,8 +469,8 @@ ZONE_TO_ATTACKER_POS_DICT = {
     "ml": ["ml", "dml", "aml"],
     "mr": ["mr", "dmr", "amr"],
     "fc": ["fc", "amc"],
-    "fl": ["fl", "aml"],
-    "fr": ["fr", "amr"],
+    "fl": ["ml", "aml"],
+    "fr": ["mr", "amr"],
 }
 ATTACKER_ZONE_TO_DEFENDER_ZONE_DICT = {
     "dc": "fc",
