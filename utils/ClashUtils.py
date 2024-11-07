@@ -511,7 +511,7 @@ def buildOneOnOneClashReport(attacker: Player, attackerPosition: str, defender: 
     attackerTacticGrade = getPlayerTacticsGrade(attacker, style, zone, True)
     defenderTacticGrade = getPlayerTacticsGrade(defender, style, zone, False)
 
-    return ClashReport(zone=zone, attacker=attacker.name, attacker_pos=attackerPosition, attacker_energy=attacker.form,  attacker_overall_grade=attacker.rating, attacker_tactic_grade=attackerTacticGrade, defender=defender.name, defender_pos=defenderPosition, defender_energy=defender.form, defender_overall_grade=defender.rating, defender_tactic_grade=defenderTacticGrade)
+    return ClashReport(zone=zone, attacker=attacker.name, attacker_pos=attackerPosition, attacker_energy=attacker.form,  attacker_overall_grade=attacker.rating, attacker_tactic_grade=attackerTacticGrade, win_possibility=attackerTacticGrade/(attackerTacticGrade + defenderTacticGrade), defender=defender.name, defender_pos=defenderPosition, defender_energy=defender.form, defender_overall_grade=defender.rating, defender_tactic_grade=defenderTacticGrade)
 
 
 def getPlayerTacticsGrade(player: Player, style: AttackingStyle, zone: str, is_attacking: bool) -> float:

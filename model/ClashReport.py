@@ -10,6 +10,7 @@ class ClashReport:
     attacker_energy: float
     attacker_overall_grade: float
     attacker_tactic_grade: float
+    win_possibility: float
 
     defender: str
     defender_pos: str
