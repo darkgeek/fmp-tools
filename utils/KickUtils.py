@@ -208,7 +208,7 @@ def buildBattleReport(attackers: [LineupPlayer], defenders: [LineupPlayer], allA
 
         styleToReportsDict[aStyle] = reports
 
-    return reports
+    return styleToReportsDict
 
 
 def buildOneOnOneBattleReport(attacker: Player, aPos: str, defender: Player, dPos: str, aStyle: AttackingStyle, gk: Player) -> KickingBattleReport:
