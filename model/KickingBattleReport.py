@@ -4,22 +4,17 @@ from model.KickStyle import KickStyle
 
 @dataclass
 class KickingBattleReport:
-    style: KickStyle
-    possibility: float
-
     attacker: str
     attacker_pos: str
     attacker_energy: float
     attacker_overall_grade: float
-    attacker_tactic_grade: float
 
     defender: str
     defender_pos: str
     defender_energy: float
     defender_overall_grade: float
-    defender_tactic_grade: float
 
-    score_method_grade: float
+    duel_win_possibilities: []
+
     gk_energy: float
     gk_overall_grade: float
-    gk_tactic_grade: float

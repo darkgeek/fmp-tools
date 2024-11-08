@@ -20,10 +20,6 @@ parser.add_argument(
     '--ml', type=str, help='my lineup data file', required=True)
 parser.add_argument(
     '--ol', type=str, help='opponent lineup json file', required=True)
-parser.add_argument('--ms', type=str, choices=[
-                    style.name for style in AttackingStyle], help='my attacking style', required=True)
-parser.add_argument('--os', type=str, choices=[
-                    style.name for style in AttackingStyle], help='opponent attacking style', required=True)
 
 args = parser.parse_args()
 
@@ -46,7 +42,7 @@ print("Done.")
 
 # Build reports
 attack_reports = buildClashReport(
-    my_lineup.players, opponent_lineup.players, AttackingStyle[args.ms], my_players, opponent_players)
+    my_lineup.players, opponent_lineup.players, my_players, opponent_players)
 print("=======Attacking Report=======")
 pprint.pp(attack_reports)
 
@@ -54,19 +50,19 @@ print("\n\n")
 
 print("=======Defending Report=======")
 defend_reports = buildClashReport(
-    opponent_lineup.players, my_lineup.players, AttackingStyle[args.os], opponent_players, my_players)
+    opponent_lineup.players, my_lineup.players, opponent_players, my_players)
 pprint.pp(defend_reports)
 
 print("\n\n")
 
 print("=======Attacking Kicking Report=======")
 attack_kick_reports = buildBattleReport(
-    my_lineup.players, opponent_lineup.players, AttackingStyle[args.ms], my_players, opponent_players)
+    my_lineup.players, opponent_lineup.players, my_players, opponent_players)
 pprint.pp(attack_kick_reports)
 
 print("\n\n")
 
 print("=======Defending Kicking Report=======")
 defend_kick_reports = buildBattleReport(
-    opponent_lineup.players, my_lineup.players, AttackingStyle[args.os], opponent_players, my_players)
+    opponent_lineup.players, my_lineup.players, opponent_players, my_players)
 pprint.pp(defend_kick_reports)

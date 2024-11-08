@@ -189,29 +189,34 @@ KICK_PLAYER_POSITIONS = ["fc", "amc", "aml", "amr"]
 DEFEND_PLAYER_POSITIONS = ["dc", "dl", "dr", "dmc"]
 
 
-def buildBattleReport(attackers: [LineupPlayer], defenders: [LineupPlayer], style: AttackingStyle, allAttackers: [Player], allDefenders: [Player]) -> [KickingBattleReport]:
-    reports = []
+def buildBattleReport(attackers: [LineupPlayer], defenders: [LineupPlayer], allAttackers: [Player], allDefenders: [Player]) -> {}:
+    styleToReportsDict = {}
 
     aPlayers = get_by_pos_list(KICK_PLAYER_POSITIONS, attackers)
     dPlayers = get_by_pos_list(DEFEND_PLAYER_POSITIONS, defenders)
     gkPlayer = get_by_pos("gk", defenders)[0]
     fullGkPlayer = get_by_no(gkPlayer.no, allDefenders)
 
-    for ap in aPlayers:
-        fullAp = get_by_no(ap.no, allAttackers)
-        for dp in dPlayers:
-            fullDp = get_by_no(dp.no, allDefenders)
-            reports.extend(buildOneOnOneBattleReport(
-                fullAp, ap.position, fullDp, dp.position, style, fullGkPlayer))
+    for aStyle in AttackingStyle:
+        reports = []
+        for ap in aPlayers:
+            fullAp = get_by_no(ap.no, allAttackers)
+            for dp in dPlayers:
+                fullDp = get_by_no(dp.no, allDefenders)
+                reports.append(buildOneOnOneBattleReport(
+                    fullAp, ap.position, fullDp, dp.position, aStyle, fullGkPlayer))
+
+        styleToReportsDict[aStyle] = reports
 
     return reports
 
 
-def buildOneOnOneBattleReport(attacker: Player, aPos: str, defender: Player, dPos: str, aStyle: AttackingStyle, gk: Player) -> [KickingBattleReport]:
-    reports = []
+def buildOneOnOneBattleReport(attacker: Player, aPos: str, defender: Player, dPos: str, aStyle: AttackingStyle, gk: Player) -> KickingBattleReport:
 
+    duelData = []
     kickStyleToPosibilityDict = ACTION_TO_FINALIZATION_DICT.get(aStyle, {})
     for kickStyle in kickStyleToPosibilityDict.keys():
+        kickStyleToWinPossibilityDict = {}
         aGrade = 0
         dGrade = 0
 
@@ -226,12 +231,15 @@ def buildOneOnOneBattleReport(attacker: Player, aPos: str, defender: Player, dPo
             dGrade = dGrade + dSkillsDict.get(sk, 0) * getattr(defender, sk)
 
         scoreReport = buildScoreReport(attacker, gk, kickStyle)
+        kickStyleToWinPossibilityDict["kickStyle"] = kickStyle
+        kickStyleToWinPossibilityDict["duelWin"] = aGrade / (aGrade + dGrade)
+        kickStyleToWinPossibilityDict["scoreWin"] = scoreReport.score_method_grade / (
+            scoreReport.score_method_grade + scoreReport.gk_tactic_grade)
+        kickStyleToWinPossibilityDict["frequency"] = kickStyleToPosibilityDict.get(
+            kickStyle, 0)
+        duelData.append(kickStyleToWinPossibilityDict)
 
-        report = KickingBattleReport(style=kickStyle, possibility=kickStyleToPosibilityDict.get(kickStyle, 0), attacker=attacker.name, attacker_pos=aPos, attacker_energy=attacker.form, attacker_overall_grade=attacker.rating,
-                                     attacker_tactic_grade=aGrade, defender=defender.name, defender_pos=dPos, defender_energy=defender.form, defender_overall_grade=defender.rating, defender_tactic_grade=dGrade, score_method_grade=scoreReport.score_method_grade, gk_energy=scoreReport.gk_energy, gk_overall_grade=scoreReport.gk_overall_grade, gk_tactic_grade=scoreReport.gk_tactic_grade)
-        reports.append(report)
-
-    return reports
+    return KickingBattleReport(attacker=attacker.name, attacker_pos=aPos, attacker_energy=attacker.form, attacker_overall_grade=attacker.rating, defender=defender.name, defender_pos=dPos, defender_energy=defender.form, defender_overall_grade=defender.rating, gk_energy=scoreReport.gk_energy, gk_overall_grade=scoreReport.gk_overall_grade, duel_win_possibilities=duelData)
 
 
 def buildScoreReport(attacker: Player, gk: Player, kStyle: KickStyle) -> ScoreBattleReport:

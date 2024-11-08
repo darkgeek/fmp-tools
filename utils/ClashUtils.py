@@ -485,7 +485,7 @@ ATTACKER_ZONE_TO_DEFENDER_ZONE_DICT = {
 }
 
 
-def buildClashReport(attackers: [LineupPlayer], defenders: [LineupPlayer], style: AttackingStyle, allAttackers: [Player], allDefenders: [Player]) -> [ClashReport]:
+def buildClashReport(attackers: [LineupPlayer], defenders: [LineupPlayer], allAttackers: [Player], allDefenders: [Player]) -> [ClashReport]:
     reports = []
 
     for zone in ZONES:
@@ -501,17 +501,28 @@ def buildClashReport(attackers: [LineupPlayer], defenders: [LineupPlayer], style
                 fullDp = get_by_no(dp.no, allDefenders)
 
                 report = buildOneOnOneClashReport(
-                    fullAp, ap.position, fullDp, dp.position, style, zone)
+                    fullAp, ap.position, fullDp, dp.position, zone)
                 reports.append(report)
 
     return reports
 
 
-def buildOneOnOneClashReport(attacker: Player, attackerPosition: str, defender: Player, defenderPosition: str, style: AttackingStyle, zone: str) -> ClashReport:
-    attackerTacticGrade = getPlayerTacticsGrade(attacker, style, zone, True)
-    defenderTacticGrade = getPlayerTacticsGrade(defender, style, zone, False)
+def buildOneOnOneClashReport(attacker: Player, attackerPosition: str, defender: Player, defenderPosition: str, zone: str) -> ClashReport:
+    return ClashReport(zone=zone, attacker=attacker.name, attacker_pos=attackerPosition, attacker_energy=attacker.form,  attacker_overall_grade=attacker.rating, win_possibilities=buildPossibilities(attacker, defender, zone), defender=defender.name, defender_pos=defenderPosition, defender_energy=defender.form, defender_overall_grade=defender.rating)
 
-    return ClashReport(zone=zone, attacker=attacker.name, attacker_pos=attackerPosition, attacker_energy=attacker.form,  attacker_overall_grade=attacker.rating, attacker_tactic_grade=attackerTacticGrade, win_possibility=attackerTacticGrade/(attackerTacticGrade + defenderTacticGrade), defender=defender.name, defender_pos=defenderPosition, defender_energy=defender.form, defender_overall_grade=defender.rating, defender_tactic_grade=defenderTacticGrade)
+
+def buildPossibilities(attacker: Player, defender: Player, zone: str) -> []:
+    possibilities = []
+
+    for style in AttackingStyle:
+        attackerTacticGrade = getPlayerTacticsGrade(
+            attacker, style, zone, True)
+        defenderTacticGrade = getPlayerTacticsGrade(
+            defender, style, zone, False)
+        possibilities.append(
+            {"style": style, "possibility": attackerTacticGrade/(attackerTacticGrade + defenderTacticGrade)})
+
+    return possibilities
 
 
 def getPlayerTacticsGrade(player: Player, style: AttackingStyle, zone: str, is_attacking: bool) -> float:
